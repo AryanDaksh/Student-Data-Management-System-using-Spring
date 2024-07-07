@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -39,11 +40,16 @@ public class StudentController {
         return service.getStudentByRollNo(rollNo);
     }
 
-    @PutMapping
+    @PutMapping("{rollNo}")
     public Optional<Student> updateStudent(@RequestBody @Valid Student student) {
         return service.updateStudent(student);
     }
 
+    @PatchMapping("{rollNo}")
+    public Student updateStudentField (@RequestBody @PathVariable @Valid int rollNo, Map<String, Object> fields) {
+        return service.updateStudentField(rollNo, fields);
+    }
+ 
     @DeleteMapping("{rollNo}")
     public String deleteStudent(@PathVariable int rollNo) {
         return service.deleteStudent(rollNo);
