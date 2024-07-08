@@ -40,13 +40,13 @@ public class StudentController {
         return service.getStudentByRollNo(rollNo);
     }
 
-    @PutMapping("{rollNo}")
+    @PutMapping
     public Optional<Student> updateStudent(@RequestBody @Valid Student student) {
         return service.updateStudent(student);
     }
 
     @PatchMapping("{rollNo}")
-    public Student updateStudentField (@RequestBody @PathVariable @Valid int rollNo, Map<String, Object> fields) {
+    public Student updateStudentField (@PathVariable int rollNo,@Valid @RequestBody Map<String, Object> fields) {
         return service.updateStudentField(rollNo, fields);
     }
  
