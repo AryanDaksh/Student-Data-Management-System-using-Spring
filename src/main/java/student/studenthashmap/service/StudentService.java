@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
-import jakarta.validation.Valid;
 import student.studenthashmap.model.Student;
 import student.studenthashmap.repo.StudentRepository;
 
@@ -39,16 +38,21 @@ public class StudentService {
         return repository.update(student);
     }
 
-    public Student updateStudentField(@Valid int rollNo, Map<String, Object> fields) {
+    public Student updateStudentField(int rollNo, Map<String, Object> fields) {
+        Optional<Student> studentOpt = repository.findByRollNo(rollNo);
 
-        Optional<Student> saveStudent = repository.findByRollNo(rollNo);
-        if(saveStudent.isPresent()) {
-            fields.forEach((key,value) -> {
-                Field field = ReflectionUtils.findField(Student.class, key);
-                ReflectionUtils.setField(field, saveStudent(null), value);
+        if (studentOpt.isPresent()) {
+            Student student = studentOpt.get();
+            fields.forEach((fieldName, fieldValue) -> {
+                Field field = ReflectionUtils.findField(Student.class, fieldName);
+                if (field != null) {
+                    field.setAccessible(true);
+                    ReflectionUtils.setField(field, student, fieldValue);
+                }
             });
-            return repository.save(saveStudent.get());
-            }
-            return null;
+            return repository.update(student).orElseThrow(() -> new IllegalArgumentException("Student not found with roll number: " + rollNo));
+        } else {
+            throw new IllegalArgumentException("Student not found with roll number: " + rollNo);
+        }
     }
 }
