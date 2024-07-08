@@ -94,11 +94,12 @@ public class Student {
     
     @Override
     public String toString() {
-        return "Student [rollNo=" + rollNo + ", name=" + name + ", email=" + email + ", marks=" + marks + ", location" + location
-                + ", gender" + gender + ", getEmail()=" + getEmail() + ", getMarks()=" + getMarks() + ", getName()=" + getName()
+        return "Student [rollNo=" + rollNo + ", name=" + name + ", email=" + email + ", marks=" + marks + ", location=" + location
+                + ", gender=" + gender + ", getEmail()=" + getEmail() + ", getMarks()=" + getMarks() + ", getName()=" + getName()
                 + ", getRollNo()=" + getRollNo() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass()
                 + ", toString()=" + super.toString() + "]";
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
