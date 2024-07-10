@@ -6,28 +6,28 @@ import org.mapstruct.Mapping;
 import student.studenthashmap.model.Student;
 import student.studenthashmap.model.StudentDTO;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface StudentMapper {
 
-    @Mapping(target = "studentRollNumber", source = "entity.rollNo")
-    @Mapping(target = "studentName", source = "entity.name")
-    @Mapping(target = "studentEmail", source = "entity.email")
-    @Mapping(target = "studentMarks", source = "entity.marks")
-    @Mapping(target = "studentLocation", source = "entity.location")
-    @Mapping(target = "studentGender", source = "entity.gender")
-
+    @Mapping(target = "studentRollNumber", source = "rollNo")
+    @Mapping(target = "studentName", source = "name")
+    @Mapping(target = "studentEmail", source = "email")
+    @Mapping(target = "studentMarks", source = "marks")
+    @Mapping(target = "studentLocation", source = "location")
+    @Mapping(target = "studentGender", source = "gender")
+    @Mapping(target = "studentBirthDate", source = "birthDate", dateFormat = "yyyy-MM-dd")
     StudentDTO studentToStudentDTO(Student entity);
 
-    @Mapping(target = "rollNo", source = "dto.studentRollNumber")
-    @Mapping(target = "name", source = "dto.studentName")
-    @Mapping(target = "email", source = "dto.studentEmail")
-    @Mapping(target = "marks", source = "dto.studentMarks")
-    @Mapping(target = "location", source = "dto.studentLocation")
-    @Mapping(target = "gender", source = "dto.studentGender")
+    @Mapping(target = "rollNo", source = "studentRollNumber")
+    @Mapping(target = "name", source = "studentName")
+    @Mapping(target = "email", source = "studentEmail")
+    @Mapping(target = "marks", source = "studentMarks")
+    @Mapping(target = "location", source = "studentLocation")
+    @Mapping(target = "gender", source = "studentGender")
+    @Mapping(target = "birthDate", source = "studentBirthDate", dateFormat = "yyyy-MM-dd")
     static
-
     Student studentDTOToStudent(StudentDTO dto) {
+        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'studentDTOToStudent'");
     }
-
 }
