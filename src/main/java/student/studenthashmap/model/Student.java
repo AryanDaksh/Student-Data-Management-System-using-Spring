@@ -2,6 +2,8 @@ package student.studenthashmap.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
@@ -47,6 +49,7 @@ public class Student {
     private String gender;
 
     @AgeLimit(minimumAge=18, message="Student should be atleast 18 years old")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     public Student(int rollNo, String name, String email, int marks, String location, String gender, LocalDate birthDate) {
