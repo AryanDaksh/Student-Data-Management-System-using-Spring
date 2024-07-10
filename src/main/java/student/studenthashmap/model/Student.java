@@ -1,5 +1,7 @@
 package student.studenthashmap.model;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
@@ -8,9 +10,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import student.studenthashmap.validation.AgeLimit;
 
 public class Student {
-
 
     @NotNull(message= "Roll Number is a mandatory field.")
     @Min(value=1)
@@ -44,13 +46,17 @@ public class Student {
     message = "Gender must not contain any special characters.")
     private String gender;
 
-    public Student(int rollNo, String name, String email, int marks, String location, String gender) {
+    @AgeLimit(minimumAge=18, message="Student should be atleast 18 years old")
+    private LocalDate birthDate;
+
+    public Student(int rollNo, String name, String email, int marks, String location, String gender, LocalDate birthDate) {
         this.rollNo = rollNo;
         this.name = name;
         this.email = email;
         this.marks = marks;
         this.location = location;
         this.gender = gender;
+        this.birthDate = birthDate;
     }
     public Student() {
     }
@@ -89,6 +95,12 @@ public class Student {
     }
     public void setGender(String gender) {
         this.gender = gender;
+    }
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     
@@ -133,6 +145,5 @@ public class Student {
         result = prime * result + marks;
         return result;
     }
-
 
 }
