@@ -1,5 +1,7 @@
 package student.studenthashmap.repo;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,15 +18,16 @@ public class StudentRepository {
 
     public StudentRepository() {
         studentMap = new HashMap<>();
-        studentMap.put(1, new Student(1, "Rate", "rate@gmail.com", 400, "Delhi", "Male" ));
-        studentMap.put(2, new Student(2, "Gain", "gain@gmail.com", 378, "Noida", "Female"));
-        studentMap.put(3, new Student(3, "Gate", "gate@gmail.com", 390, "Jaipur", "Male"));
+ 
+        studentMap.put(1, new Student(1, "Rate", "rate@gmail.com", 400, "Delhi", "Male", LocalDate.parse("20000708", DateTimeFormatter.BASIC_ISO_DATE)));
+        studentMap.put(2, new Student(2, "Gain", "gain@gmail.com", 378, "Noida", "Female", LocalDate.parse("20000509", DateTimeFormatter.BASIC_ISO_DATE)));
+        studentMap.put(3, new Student(3, "Gate", "gate@gmail.com", 390, "Jaipur", "Male", LocalDate.parse("20000319", DateTimeFormatter.BASIC_ISO_DATE)));
     }
 
     public Map<Integer, Student> getAllStudents() {
         return new HashMap<>(studentMap);
     }
-
+    
     public Optional<Student> findByRollNo(int rollNo) {
         return Optional.ofNullable(studentMap.get(rollNo));
     }
