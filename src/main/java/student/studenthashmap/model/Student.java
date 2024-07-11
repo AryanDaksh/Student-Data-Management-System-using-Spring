@@ -14,6 +14,9 @@ import student.studenthashmap.validation.AgeLimit;
 
 public class Student {
 
+
+    // This is a student POJO
+
     @NotNull(message= "Roll Number is a mandatory field.")
     @Min(value=1)
     @Max(value=60)
