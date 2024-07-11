@@ -50,7 +50,7 @@ public class StudentController {
         return service.updateStudentField(rollNo, fields);
     }
  
-    @DeleteMapping("{rollNo}")
+    @DeleteMapping("number/{rollNo}")
     public String deleteStudent(@PathVariable int rollNo) {
         return service.deleteStudent(rollNo);
     }

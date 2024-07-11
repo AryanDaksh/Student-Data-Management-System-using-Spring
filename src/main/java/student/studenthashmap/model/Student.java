@@ -146,4 +146,5 @@ public class Student {
         result = prime * result + marks;
         return result;
     }
+
 }
