@@ -1,6 +1,8 @@
 package student.studenthashmap.service;
 
 import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Optional;
 
@@ -47,7 +49,12 @@ public class StudentService {
                 Field field = ReflectionUtils.findField(Student.class, fieldName);
                 if (field != null) {
                     field.setAccessible(true);
-                    ReflectionUtils.setField(field, student, fieldValue);
+                    if ("birthDate".equals(fieldName) && fieldValue instanceof String) {
+                        LocalDate birthDate = LocalDate.parse((String) fieldValue, DateTimeFormatter.BASIC_ISO_DATE);
+                        ReflectionUtils.setField(field, student, birthDate);
+                    } else {
+                        ReflectionUtils.setField(field, student, fieldValue);
+                    }
                 }
             });
             return repository.update(student).orElseThrow(() -> new IllegalArgumentException("Student not found with roll number: " + rollNo));
