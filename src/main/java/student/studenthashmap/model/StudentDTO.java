@@ -36,10 +36,10 @@ public class StudentDTO {
     @Digits(integer = 3, fraction = 0, message = "Enter marks in format 000.")
     private int studentMarks;
 
-    @NotBlank(message = "Location is a mandatory field.")
+    /*@NotBlank(message = "Location is a mandatory field.")
     @Pattern(regexp = "^[a-zA-Z]{0,10}$",
             message = "Location must not contain any special characters.")
-    private String studentLocation;
+    private String studentLocation;*/
 
     @NotBlank(message = "Gender is a mandatory field.")
     @Pattern(regexp = "^[a-zA-Z]{0,10}$",
@@ -50,59 +50,45 @@ public class StudentDTO {
     @AgeLimit(minimumAge=18, message="Student should be atleast 18 years old")
     private LocalDate studentBirthDate;
 
+    //@NotNull(message = "Aadhaar Number is a mandatory field.")
+    //@Digits(fraction = 0, integer = 12)
+    //private Long studentAadharNo;
+
     public int getStudentRollNumber() {
         return studentRollNumber;
     }
-
     public void setStudentRollNumber(int studentRollNumber) {
         this.studentRollNumber = studentRollNumber;
     }
-
     public String getStudentName() {
         return studentName;
     }
-
     public void setStudentName(String studentName) {
         this.studentName = studentName;
     }
-
     public String getStudentEmail() {
         return studentEmail;
     }
-
     public void setStudentEmail(String studentEmail) {
         this.studentEmail = studentEmail;
     }
-
     public int getStudentMarks() {
         return studentMarks;
     }
-
     public void setStudentMarks(int studentMarks) {
         this.studentMarks = studentMarks;
     }
-
-    public String getStudentLocation() {
-        return studentLocation;
-    }
-
-    public void setStudentLocation(String studentLocation) {
-        this.studentLocation = studentLocation;
-    }
-
     public String getStudentGender() {
         return studentGender;
     }
-
     public void setStudentGender(String studentGender) {
         this.studentGender = studentGender;
     }
-
     public LocalDate getStudentBirthDate() {
         return studentBirthDate;
     }
-
     public void setStudentBirthDate(LocalDate studentBirthDate) {
         this.studentBirthDate = studentBirthDate;
     }
+
 }

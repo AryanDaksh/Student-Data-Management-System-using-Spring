@@ -13,7 +13,6 @@ public interface StudentMapper {
     @Mapping(target = "studentName", source = "name")
     @Mapping(target = "studentEmail", source = "email")
     @Mapping(target = "studentMarks", source = "marks")
-    @Mapping(target = "studentLocation", source = "location")
     @Mapping(target = "studentGender", source = "gender")
     @Mapping(target = "studentBirthDate", source = "birthDate", dateFormat = "yyyy-MM-dd")
     StudentDTO studentToStudentDTO(Student entity);
@@ -22,11 +21,15 @@ public interface StudentMapper {
     @Mapping(target = "name", source = "studentName")
     @Mapping(target = "email", source = "studentEmail")
     @Mapping(target = "marks", source = "studentMarks")
-    @Mapping(target = "location", source = "studentLocation")
+    //@Mapping(target = "location", source = "studentLocation")
     @Mapping(target = "gender", source = "studentGender")
     @Mapping(target = "birthDate", source = "studentBirthDate", dateFormat = "yyyy-MM-dd")
-    static
-    Student studentDTOToStudent(StudentDTO dto) {
+    //@Mapping(target = "aadharNo", source = "studentAadharno")
+    
+    static Student studentDTOToStudent(StudentDTO dto) {
         throw new UnsupportedOperationException("Unimplemented method 'studentDTOToStudent'");
     }
+
+    //ModelMapper modelMapper = new ModelMapper(),
+    //StudentDTO = modelMapper.map(null, StudentDTO.class);
 }

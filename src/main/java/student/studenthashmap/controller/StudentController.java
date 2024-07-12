@@ -19,7 +19,7 @@ import student.studenthashmap.model.Student;
 import student.studenthashmap.service.StudentService;
 
 @RestController
-@RequestMapping("/api/v1/students")
+@RequestMapping("/api/students")
 public class StudentController {
 
     @Autowired
@@ -30,13 +30,14 @@ public class StudentController {
         return service.saveStudent(student);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/v1/all")
     public Map<Integer, Student> findAllStudents() {
         return service.getStudents();
     }
 
-    @GetMapping("{rollNo}")
+    @GetMapping("v1/{rollNo}")
     public Optional<Student> findStudentByRollNo(@PathVariable @Valid int rollNo) {
+        //throw new ApiRequestException("Cannot get all students. - Custom Exception");
         return service.getStudentByRollNo(rollNo);
     }
 
@@ -50,7 +51,7 @@ public class StudentController {
         return service.updateStudentField(rollNo, fields);
     }
  
-    @DeleteMapping("number/{rollNo}")
+    @DeleteMapping("v1/{rollNo}")
     public String deleteStudent(@PathVariable int rollNo) {
         return service.deleteStudent(rollNo);
     }
