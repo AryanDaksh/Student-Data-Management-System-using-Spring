@@ -108,10 +108,10 @@ public class Student {
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
-    public long getAadhaarNo() {
+    public long getAadharNo() {
         return aadharNo;
     }
-    public void setAadhaarNo(long aadharNo) {
+    public void setAadharNo(long aadharNo) {
         this.aadharNo = aadharNo;
     }
     

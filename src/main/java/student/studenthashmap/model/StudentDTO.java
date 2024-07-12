@@ -50,7 +50,7 @@ public class StudentDTO {
     @AgeLimit(minimumAge=18, message="Student should be atleast 18 years old")
     private LocalDate studentBirthDate;
 
-    //@NotNull(message = "Aadhaar Number is a mandatory field.")
+    //@NotNull(message = "Aadhar Number is a mandatory field.")
     //@Digits(fraction = 0, integer = 12)
     //private Long studentAadharNo;
 
