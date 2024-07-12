@@ -33,7 +33,7 @@ public class StudentService {
 
     public String deleteStudent(int rollNo) {
         boolean isDeleted = repository.delete(rollNo);
-        return isDeleted ? "Student removed !! " + rollNo : "Student not found with id !! " + rollNo;
+        return isDeleted ? "Student removed. " + rollNo : "Student not found with roll no. " + rollNo;
     }
 
     public Optional<Student> updateStudent(Student student) {
@@ -62,4 +62,7 @@ public class StudentService {
             throw new IllegalArgumentException("Student not found with roll number: " + rollNo);
         }
     }
+
+    //ModelMapper modelMapper = new ModelMapper(),
+    //StudentDTO = modelMapper.map(null, StudentDTO.class);
 }

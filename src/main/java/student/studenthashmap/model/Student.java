@@ -47,10 +47,14 @@ public class Student {
     private String gender;
 
     @AgeLimit(minimumAge=18, message="Student should be atleast 18 years old")
-    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Birth date must be in the format YYYY-MM-DD.")
+    //@Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Birth date must be in the format YYYY-MM-DD.")
     private LocalDate birthDate;
 
-    public Student(int rollNo, String name, String email, int marks, String location, String gender, LocalDate birthDate) {
+    //@NotNull(message = "Aadhar Number is a mandatory field.")
+    //@Digits(fraction = 0, integer = 12)
+    private long aadharNo;
+
+    public Student(int rollNo, String name, String email, int marks, String location, String gender, LocalDate birthDate, Long aadharNo) {
         this.rollNo = rollNo;
         this.name = name;
         this.email = email;
@@ -58,6 +62,7 @@ public class Student {
         this.location = location;
         this.gender = gender;
         this.birthDate = birthDate;
+        this.aadharNo = aadharNo;
     }
     public Student() {
     }
@@ -103,7 +108,12 @@ public class Student {
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
-
+    public long getAadhaarNo() {
+        return aadharNo;
+    }
+    public void setAadhaarNo(long aadharNo) {
+        this.aadharNo = aadharNo;
+    }
     
     @Override
     public String toString() {
