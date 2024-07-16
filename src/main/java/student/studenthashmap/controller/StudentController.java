@@ -4,7 +4,15 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import student.studenthashmap.model.Student;
@@ -23,7 +31,7 @@ public class StudentController {
         return service.saveStudent(student);
     }
 
-    @PostMapping("/dto")
+    @PostMapping("/v2")
     public StudentDTO addStudentDTO(@RequestBody @Valid StudentDTO studentDTO) {
         return service.saveStudentDTO(studentDTO);
     }
@@ -53,7 +61,7 @@ public class StudentController {
         return service.updateStudent(student);
     }
 
-    @PutMapping("/dto")
+    @PutMapping("/v2")
     public Optional<StudentDTO> updateStudentDTO(@RequestBody @Valid StudentDTO studentDTO) {
         return service.updateStudentDTO(studentDTO);
     }

@@ -3,13 +3,15 @@ package student.studenthashmap.service;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
 
 import student.studenthashmap.mapper.StudentMapper;
 import student.studenthashmap.model.Student;
@@ -71,26 +73,48 @@ public class StudentService {
         return repository.update(student).map(mapper::studentToStudentDTO);
     }
 
+    List<DateTimeFormatter> dateFormats = Arrays.asList(
+        DateTimeFormatter.ISO_LOCAL_DATE,
+        DateTimeFormatter.ofPattern("yyyyMMdd"),
+        DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    );
+
     public Student updateStudentField(int rollNo, Map<String, Object> fields) {
         Optional<Student> studentOpt = repository.findByRollNo(rollNo);
 
         if (studentOpt.isPresent()) {
-            Student student = studentOpt.get();
-            fields.forEach((fieldName, fieldValue) -> {
-                Field field = ReflectionUtils.findField(Student.class, fieldName);
-                if (field != null) {
-                    field.setAccessible(true);
-                    if ("birthDate".equals(fieldName) && fieldValue instanceof String) {
-                        LocalDate birthDate = LocalDate.parse((String) fieldValue, DateTimeFormatter.ISO_LOCAL_DATE);
-                        ReflectionUtils.setField(field, student, birthDate);
-                    } else {
-                        ReflectionUtils.setField(field, student, fieldValue);
-                    }
+        Student student = studentOpt.get();
+
+        fields.forEach((fieldName, fieldValue) -> {
+            try {
+                Field field = Student.class.getDeclaredField(fieldName);
+                field.setAccessible(true);
+
+                if ("birthDate".equals(fieldName) && fieldValue instanceof String) {
+                    LocalDate birthDate = parseDate((String) fieldValue, dateFormats);
+                    field.set(student, birthDate);
+                } else {
+                    field.set(student, fieldValue);
                 }
-            });
-            return repository.update(student).orElseThrow(() -> new IllegalArgumentException("Student not found with roll number: " + rollNo));
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                throw new RuntimeException("Failed to update field: " + fieldName, e);
+            }
+        });
+
+        return repository.update(student).orElseThrow(() -> new IllegalArgumentException("Student not found with roll number: " + rollNo));
         } else {
             throw new IllegalArgumentException("Student not found with roll number: " + rollNo);
         }
+
+    }
+
+    private LocalDate parseDate(String dateStr, List<DateTimeFormatter> dateFormats) {
+        for (DateTimeFormatter formatter : dateFormats) {
+            try {
+                return LocalDate.parse(dateStr, formatter);
+            } catch (DateTimeParseException e) {
+            }
+        }
+        throw new DateTimeParseException("Unable to parse date: " + dateStr, dateStr, 0);
     }
 }
