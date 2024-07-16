@@ -2,6 +2,8 @@ package student.studenthashmap.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
@@ -16,7 +18,7 @@ public class Student {
 
     @NotNull(message= "Roll Number is a mandatory field.")
     @Min(value=1)
-    @Max(value=60)
+    @Max(value=100)
     private int rollNo;
 
     @NotBlank(message= "Name is a mandatory field.")
@@ -47,11 +49,16 @@ public class Student {
     private String gender;
 
     @AgeLimit(minimumAge=18, message="Student should be atleast 18 years old")
+    @JsonFormat //(message - "Date should be in format YYYY-MM-DD.")
     //@Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Birth date must be in the format YYYY-MM-DD.")
     private LocalDate birthDate;
 
-    //@NotNull(message = "Aadhar Number is a mandatory field.")
-    //@Digits(fraction = 0, integer = 12)
+    @NotNull(message = "Aadhar Number is a mandatory field.")
+    @Digits(fraction = 0, integer = 12, message = "Aadhar Number should contain 12 numeric values.")
+    @Min(100000000000L)
+    @Max(999999999999L)
+    //@Pattern(regexp = "[0-9]{12}", message = "Birth date must be in the format YYYY-MM-DD.")
+    //@Size(min=12,max=12)
     private long aadharNo;
 
     public Student(int rollNo, String name, String email, int marks, String location, String gender, LocalDate birthDate, Long aadharNo) {

@@ -113,6 +113,7 @@ public class StudentService {
             try {
                 return LocalDate.parse(dateStr, formatter);
             } catch (DateTimeParseException e) {
+                throw new DateTimeParseException("Unable to parse date: " + dateStr, dateStr, 0);
             }
         }
         throw new DateTimeParseException("Unable to parse date: " + dateStr, dateStr, 0);
