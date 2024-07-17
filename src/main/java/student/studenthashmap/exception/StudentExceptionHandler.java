@@ -37,4 +37,16 @@ public class StudentExceptionHandler{
 			);
 			return new ResponseEntity<>(apiException, badRequest);
 		}
+
+		@ExceptionHandler(value = {RollNoNotFoundException.class})
+		public ResponseEntity<Object> handleApiRequestException(RollNoNotFoundException e) {
+	
+			HttpStatus notFound = HttpStatus.NOT_FOUND;
+
+			ApiException apiException = new ApiException(e.getMessage(), e, HttpStatus.BAD_REQUEST, ZonedDateTime.now(ZoneId.of("Z"))   
+			);
+			return new ResponseEntity<>(apiException, notFound);
+		}
+
+	
 }

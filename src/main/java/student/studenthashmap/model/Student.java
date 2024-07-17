@@ -44,8 +44,8 @@ public class Student {
     private String location;
 
     @NotBlank(message = "Gender is a mandatory field.")
-    @Pattern(regexp = "^[a-zA-Z]{0,10}$",
-    message = "Gender must not contain any special characters.")
+    @Pattern(regexp = "(?:Male|Female|Others)$",
+    message = "Gender must be one of the following: Male, Female, Others.")
     private String gender;
 
     @AgeLimit(minimumAge=18, message="Student should be atleast 18 years old")
@@ -153,6 +153,7 @@ public class Student {
             return false;
         return marks == other.marks;
     }
+
     @Override
     public int hashCode() {
         final int prime = 31;
