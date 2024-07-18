@@ -3,11 +3,8 @@ package student.studenthashmap.repo;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Repository;
 
 import student.studenthashmap.model.Student;
@@ -39,18 +36,21 @@ public class StudentRepository {
     }
     
     public Optional<Student> findByRollNo(int rollNo) {
+
+        boolean ans = studentMap.containsKey(rollNo);
+        if (ans == false) {
+            throw new IllegalArgumentException("No Student with Roll Number found.");
+        }
+        else { 
         return Optional.ofNullable(studentMap.get(rollNo));
+        }
     }
 
-    public List<Student> search(String name) {
-        return studentMap.values().stream()
-                         .filter(student -> student.getName().startsWith(name))
-                         .collect(Collectors.toList());
-    }
+    
 
     public Student save(Student student) {
         if (studentMap.containsKey(student.getRollNo())) {
-            throw new IllegalArgumentException("Student with this roll number already exists");
+            throw new IllegalArgumentException("Student with this roll number already exists.");
         }
         studentMap.put(student.getRollNo(), student);
         return student;
@@ -61,10 +61,14 @@ public class StudentRepository {
     }
 
     public Optional<Student> update(Student student) {
-        if (!studentMap.containsKey(student.getRollNo())) {
-            return Optional.empty();
-        }
-        studentMap.put(student.getRollNo(), student);
-        return Optional.of(student);
+
+        boolean ans = studentMap.containsKey(student.getRollNo());
+            if (ans) {
+                studentMap.put(student.getRollNo(), student);
+                return Optional.of(student);
+            } else {
+                throw new IllegalArgumentException("Student with this roll number does not exist.");
+            }
+
     }
 }

@@ -121,48 +121,5 @@ public class Student {
     public void setAadharNo(String aadharNo) {
         this.aadharNo = aadharNo;
     }
-    
-    @Override
-    public String toString() {
-        return "Student [rollNo=" + rollNo + ", name=" + name + ", email=" + email + ", marks=" + marks + ", location=" + location
-                + ", gender=" + gender + ", getEmail()=" + getEmail() + ", getMarks()=" + getMarks() + ", getName()=" + getName()
-                + ", getRollNo()=" + getRollNo() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass()
-                + ", toString()=" + super.toString() + "]";
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Student other = (Student) obj;
-        if (rollNo != other.rollNo)
-            return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (email == null) {
-            if (other.email != null)
-                return false;
-        } else if (!email.equals(other.email))
-            return false;
-        return marks == other.marks;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + rollNo;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + marks;
-        return result;
-    }
 
 }

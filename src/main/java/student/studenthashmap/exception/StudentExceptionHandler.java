@@ -2,6 +2,7 @@ package student.studenthashmap.exception;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,6 +55,16 @@ public class StudentExceptionHandler{
 		HttpStatus notFound = HttpStatus.NOT_FOUND;
 	
 		ApiException apiException = new ApiException(ey.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
+		);
+		return new ResponseEntity<>(apiException, notFound);
+	}
+
+	@ExceptionHandler(DateTimeParseException.class)
+	public ResponseEntity<Object> handleIllegalArgException(DateTimeParseException ex) {
+	
+		HttpStatus notFound = HttpStatus.NOT_FOUND;
+	
+		ApiException apiException = new ApiException(ex.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
 		);
 		return new ResponseEntity<>(apiException, notFound);
 	}
