@@ -20,15 +20,22 @@ public class StudentRepository {
         studentMap = new HashMap<>();
  
         studentMap.put(1, new Student(1, "Rate", "rate@gmail.com", 400, "Delhi", 
-                        "Male", LocalDate.parse("20000708", DateTimeFormatter.BASIC_ISO_DATE), 100034000460L));
+                        "Male", LocalDate.parse("20000708", DateTimeFormatter.BASIC_ISO_DATE), "100034000460"));
         studentMap.put(2, new Student(2, "Gain", "gain@gmail.com", 378, "Noida", 
-                        "Female", LocalDate.parse("20000509", DateTimeFormatter.BASIC_ISO_DATE), 100400000000L));
+                        "Female", LocalDate.parse("20000509", DateTimeFormatter.BASIC_ISO_DATE), "100400000000"));
         studentMap.put(3, new Student(3, "Gate", "gate@gmail.com", 390, "Jaipur", 
-                        "Others", LocalDate.parse("20000319", DateTimeFormatter.BASIC_ISO_DATE), 120000000000L));
+                        "Others", LocalDate.parse("20000319", DateTimeFormatter.BASIC_ISO_DATE), "120000000000"));
     }
 
     public Map<Integer, Student> getAllStudents() {
-        return new HashMap<>(studentMap);
+
+        boolean ans = studentMap.isEmpty();
+        if (ans == true) {
+            throw new IllegalArgumentException("No Student Data available.");
+        }
+        else {
+            return new HashMap<>(studentMap);
+        }        
     }
     
     public Optional<Student> findByRollNo(int rollNo) {

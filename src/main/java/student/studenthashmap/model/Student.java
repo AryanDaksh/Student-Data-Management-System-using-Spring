@@ -53,15 +53,15 @@ public class Student {
     //@Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Birth date must be in the format YYYY-MM-DD.")
     private LocalDate birthDate;
 
-    @NotNull(message = "Aadhar Number is a mandatory field.")
-    @Digits(fraction = 0, integer = 12, message = "Aadhar Number should contain 12 numeric values.")
-    @Min(100000000000L)
-    @Max(999999999999L)
-    //@Pattern(regexp = "[0-9]{12}", message = "Birth date must be in the format YYYY-MM-DD.")
+    @NotBlank(message = "Aadhar Number is a mandatory field.")
+    @Pattern(regexp = "[0-9]{12}", message = "Enter a valid 12-digit Aadhar Number.")
+    //@Digits(fraction = 0, integer = 12, message = "Aadhar Number should contain 12 numeric values.")
+    //@Min(100000000000L)
+    //@Max(999999999999L)
     //@Size(min=12,max=12)
-    private long aadharNo;
+    private String aadharNo;
 
-    public Student(int rollNo, String name, String email, int marks, String location, String gender, LocalDate birthDate, Long aadharNo) {
+    public Student(int rollNo, String name, String email, int marks, String location, String gender, LocalDate birthDate, String aadharNo) {
         this.rollNo = rollNo;
         this.name = name;
         this.email = email;
@@ -115,10 +115,10 @@ public class Student {
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
-    public long getAadharNo() {
+    public String getAadharNo() {
         return aadharNo;
     }
-    public void setAadharNo(long aadharNo) {
+    public void setAadharNo(String aadharNo) {
         this.aadharNo = aadharNo;
     }
     
