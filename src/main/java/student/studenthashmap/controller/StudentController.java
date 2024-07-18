@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.validation.Valid;
 import student.studenthashmap.model.Student;
 import student.studenthashmap.model.StudentDTO;
+import student.studenthashmap.repo.StudentRepository;
 import student.studenthashmap.service.StudentService;
 
 @RestController
@@ -75,4 +78,12 @@ public class StudentController {
     public String deleteStudent(@PathVariable int rollNo) {
         return service.deleteStudent(rollNo);
     }
+
+    public ModelAndView save(@ModelAttribute StudentRepository studentMap)  {    
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("student-data");        
+    modelAndView.addObject("student", studentMap);      
+    return modelAndView;    
+    }
+        
 }
