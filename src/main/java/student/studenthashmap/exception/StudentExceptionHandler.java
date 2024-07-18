@@ -27,7 +27,7 @@ public class StudentExceptionHandler{
 			  errors.put(fieldName, errorMessage);
 		  });
 		  return new ResponseEntity<> (errors, HttpStatus.BAD_REQUEST);
-		}
+	}
 
 	@ExceptionHandler(IllegalArgumentException.class)
 	public ResponseEntity<Object> handleIllegalArgException(IllegalArgumentException ey) {

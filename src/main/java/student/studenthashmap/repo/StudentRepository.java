@@ -40,7 +40,7 @@ public class StudentRepository {
 
         boolean ans = studentMap.containsKey(rollNo);
         if (ans == false) {
-            throw new IllegalArgumentException("No Student with Roll Number found.");
+            throw new IllegalArgumentException("Student with this roll number does not exist.");
         }
         else { 
         return Optional.ofNullable(studentMap.get(rollNo));
