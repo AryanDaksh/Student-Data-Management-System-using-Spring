@@ -2,6 +2,7 @@ package student.studenthashmap.exception;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,24 +30,42 @@ public class StudentExceptionHandler{
 		}
 
 	@ExceptionHandler(value = {ApiRequestException.class})
-		public ResponseEntity<Object> handleApiRequestException(ApiRequestException e) {
+	public ResponseEntity<Object> handleApiRequestException(ApiRequestException e) {
 	
-			HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+		HttpStatus badRequest = HttpStatus.BAD_REQUEST;
 
-			ApiException apiException = new ApiException(e.getMessage(), e, HttpStatus.BAD_REQUEST, ZonedDateTime.now(ZoneId.of("Z"))   
-			);
-			return new ResponseEntity<>(apiException, badRequest);
+		ApiException apiException = new ApiException(e.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
+		);
+		return new ResponseEntity<>(apiException, badRequest);
 		}
 
-		@ExceptionHandler(value = {RollNoNotFoundException.class})
-		public ResponseEntity<Object> handleApiRequestException(RollNoNotFoundException e) {
+	@ExceptionHandler(value = {RollNoNotFoundException.class})
+	public ResponseEntity<Object> rollNoNotFoundException(RollNoNotFoundException e) {
 	
-			HttpStatus notFound = HttpStatus.NOT_FOUND;
+		HttpStatus notFound = HttpStatus.NOT_FOUND;
 
-			ApiException apiException = new ApiException(e.getMessage(), e, HttpStatus.BAD_REQUEST, ZonedDateTime.now(ZoneId.of("Z"))   
-			);
-			return new ResponseEntity<>(apiException, notFound);
+		ApiException apiException = new ApiException(e.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
+		);
+		return new ResponseEntity<>(apiException, notFound);
 		}
 
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<Object> handleIllegalArgException(IllegalArgumentException ey) {
 	
+		HttpStatus notFound = HttpStatus.NOT_FOUND;
+	
+		ApiException apiException = new ApiException(ey.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
+		);
+		return new ResponseEntity<>(apiException, notFound);
+	}
+
+	@ExceptionHandler(DateTimeParseException.class)
+	public ResponseEntity<Object> handleIllegalArgException(DateTimeParseException ex) {
+	
+		HttpStatus notFound = HttpStatus.NOT_FOUND;
+	
+		ApiException apiException = new ApiException(ex.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
+		);
+		return new ResponseEntity<>(apiException, notFound);
+	}
 }

@@ -64,11 +64,6 @@ public class StudentController {
         return service.updateStudent(student);
     }
 
-    @PutMapping("/v2")
-    public Optional<StudentDTO> updateStudentDTO(@RequestBody @Valid StudentDTO studentDTO) {
-        return service.updateStudentDTO(studentDTO);
-    }
-
     @PatchMapping("{rollNo}")
     public Student updateStudentField(@PathVariable int rollNo, @Valid @RequestBody Map<String, Object> fields) {
         return service.updateStudentField(rollNo, fields);

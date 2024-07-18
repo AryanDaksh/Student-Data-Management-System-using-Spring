@@ -76,9 +76,7 @@ public class StudentService {
     }
 
     List<DateTimeFormatter> dateFormats = Arrays.asList(
-        DateTimeFormatter.ISO_LOCAL_DATE,
-        DateTimeFormatter.ofPattern("yyyyMMdd"),
-        DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        DateTimeFormatter.ISO_LOCAL_DATE
     );
 
     public Student updateStudentField(int rollNo, Map<String, Object> fields) {
@@ -115,9 +113,9 @@ public class StudentService {
             try {
                 return LocalDate.parse(dateStr, formatter);
             } catch (DateTimeParseException e) {
-                throw new DateTimeParseException("Unable to parse date: " + dateStr, dateStr, 0);
+                throw new DateTimeParseException("Unable to parse date: " + dateStr + ". Please write in YYYY-MM-DD format.", dateStr, 0);
             }
         }
-        throw new DateTimeParseException("Unable to parse date: " + dateStr, dateStr, 0);
+        throw new DateTimeParseException("Unable to parse date: " + dateStr + "Please write in YYYY-MM-DD format.", dateStr, 0);
     }
 }
