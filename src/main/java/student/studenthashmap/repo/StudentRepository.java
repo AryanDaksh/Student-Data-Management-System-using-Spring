@@ -11,6 +11,7 @@ import student.studenthashmap.model.Student;
 
 @Repository
 public class StudentRepository {
+    
     private final Map<Integer, Student> studentMap;
 
     public StudentRepository() {
@@ -45,8 +46,6 @@ public class StudentRepository {
         return Optional.ofNullable(studentMap.get(rollNo));
         }
     }
-
-    
 
     public Student save(Student student) {
         if (studentMap.containsKey(student.getRollNo())) {
