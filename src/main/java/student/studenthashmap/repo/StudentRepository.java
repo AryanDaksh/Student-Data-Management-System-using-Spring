@@ -11,7 +11,6 @@ import student.studenthashmap.model.Student;
 
 @Repository
 public class StudentRepository {
-    
     private final Map<Integer, Student> studentMap;
 
     public StudentRepository() {
@@ -40,12 +39,14 @@ public class StudentRepository {
 
         boolean ans = studentMap.containsKey(rollNo);
         if (ans == false) {
-            throw new IllegalArgumentException("No Student with Roll Number found.");
+            throw new IllegalArgumentException("Student with this roll number does not exist.");
         }
         else { 
         return Optional.ofNullable(studentMap.get(rollNo));
         }
     }
+
+    
 
     public Student save(Student student) {
         if (studentMap.containsKey(student.getRollNo())) {

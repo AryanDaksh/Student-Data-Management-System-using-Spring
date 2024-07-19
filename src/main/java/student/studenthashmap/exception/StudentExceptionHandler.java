@@ -27,6 +27,26 @@ public class StudentExceptionHandler{
 			  errors.put(fieldName, errorMessage);
 		  });
 		  return new ResponseEntity<> (errors, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(value = {ApiRequestException.class})
+	public ResponseEntity<Object> handleApiRequestException(ApiRequestException e) {
+	
+		HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+
+		ApiException apiException = new ApiException(e.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
+		);
+		return new ResponseEntity<>(apiException, badRequest);
+		}
+
+	@ExceptionHandler(value = {RollNoNotFoundException.class})
+	public ResponseEntity<Object> rollNoNotFoundException(RollNoNotFoundException e) {
+	
+		HttpStatus notFound = HttpStatus.NOT_FOUND;
+
+		ApiException apiException = new ApiException(e.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
+		);
+		return new ResponseEntity<>(apiException, notFound);
 		}
 
 	@ExceptionHandler(IllegalArgumentException.class)
