@@ -36,6 +36,11 @@ public class StudentDTO {
     @Digits(integer = 3, fraction = 0, message = "Enter marks in format 000.")
     private int studentMarks;
 
+    /*@NotBlank(message = "Location is a mandatory field.")
+    @Pattern(regexp = "^[a-zA-Z]{0,10}$",
+            message = "Location must not contain any special characters.")
+    private String studentLocation;*/
+
     @NotBlank(message = "Gender is a mandatory field.")
     @Pattern(regexp = "^[a-zA-Z]{0,10}$",
             message = "Gender must not contain any special characters.")
@@ -44,6 +49,10 @@ public class StudentDTO {
     @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Birth Date must be in the format YYYY-MM-DD.")
     @AgeLimit(minimumAge=18, message="Student should be atleast 18 years old")
     private LocalDate studentBirthDate;
+
+    //@NotNull(message = "Aadhar Number is a mandatory field.")
+    //@Digits(fraction = 0, integer = 12)
+    //private Long studentAadharNo;
 
     public int getStudentRollNumber() {
         return studentRollNumber;
