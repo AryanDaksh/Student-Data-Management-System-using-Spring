@@ -49,11 +49,16 @@ public class Student {
     private String gender;
 
     @AgeLimit(minimumAge=18, message="Student should be atleast 18 years old")
-    @JsonFormat
+    @JsonFormat //(message - "Date should be in format YYYY-MM-DD.")
+    //@Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Birth date must be in the format YYYY-MM-DD.")
     private LocalDate birthDate;
 
     @NotBlank(message = "Aadhar Number is a mandatory field.")
     @Pattern(regexp = "[0-9]{12}", message = "Enter a valid 12-digit Aadhar Number.")
+    //@Digits(fraction = 0, integer = 12, message = "Aadhar Number should contain 12 numeric values.")
+    //@Min(100000000000L)
+    //@Max(999999999999L)
+    //@Size(min=12,max=12)
     private String aadharNo;
 
     public Student(int rollNo, String name, String email, int marks, String location, String gender, LocalDate birthDate, String aadharNo) {

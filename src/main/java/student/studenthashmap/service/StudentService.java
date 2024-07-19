@@ -51,6 +51,8 @@ public class StudentService {
     }
 
     public Optional<Student> getStudentByRollNo(int rollNo) {
+
+        //if (rollNo <= 0) throw new RollNoNotFoundException(rollNo);
         return repository.findByRollNo(rollNo);
     }
 
