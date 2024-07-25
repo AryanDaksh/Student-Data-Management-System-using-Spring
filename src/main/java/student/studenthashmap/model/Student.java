@@ -23,7 +23,7 @@ public class Student {
 
     @NotBlank(message= "Name is a mandatory field.")
     @Size(min=3, message="Name should be of atleast 3 letters")
-    @Size(max=10, message = "Name should be of 10 letters or less.")
+    @Size(max=10, message = "Name can be of maximum 10 letters.")
     @Pattern(regexp = "^[a-zA-Z]{0,10}$",
             message = "Name should not contain any special characters.")
     private String name;
@@ -35,30 +35,27 @@ public class Student {
     @NotNull(message= "Marks is a mandatory field.")
     @Min(0)
     @Max(500)
-    @Digits(integer = 3, fraction = 0, message="Enter marks in format 000.")
+    @Digits(integer = 3, fraction = 0, message="Marks should be between 0 and 500.")
     private int marks;
 
     @NotBlank(message = "Location is a mandatory field.")
+    @Size(min=3, message="Location should be of atleast 3 letters")
+    @Size(max=10, message = "Location can be of maximum 10 letters.")
     @Pattern(regexp = "^[a-zA-Z]{0,10}$",
     message = "Location must not contain any special characters.")
     private String location;
 
     @NotBlank(message = "Gender is a mandatory field.")
     @Pattern(regexp = "(?:Male|Female|Others)$",
-    message = "Gender must be one of the following: Male, Female, Others.")
+    message = "Gender should be one of the following: Male, Female, Others.")
     private String gender;
 
-    @AgeLimit(minimumAge=18, message="Student should be atleast 18 years old")
-    @JsonFormat //(message - "Date should be in format YYYY-MM-DD.")
-    //@Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Birth date must be in the format YYYY-MM-DD.")
+    @AgeLimit(minimumAge=18, message="Student should be atleast 18 years old.")
+    @JsonFormat
     private LocalDate birthDate;
 
     @NotBlank(message = "Aadhar Number is a mandatory field.")
     @Pattern(regexp = "[0-9]{12}", message = "Enter a valid 12-digit Aadhar Number.")
-    //@Digits(fraction = 0, integer = 12, message = "Aadhar Number should contain 12 numeric values.")
-    //@Min(100000000000L)
-    //@Max(999999999999L)
-    //@Size(min=12,max=12)
     private String aadharNo;
 
     public Student(int rollNo, String name, String email, int marks, String location, String gender, LocalDate birthDate, String aadharNo) {
@@ -71,6 +68,7 @@ public class Student {
         this.birthDate = birthDate;
         this.aadharNo = aadharNo;
     }
+    
     public Student() {
     }
     public int getRollNo() {

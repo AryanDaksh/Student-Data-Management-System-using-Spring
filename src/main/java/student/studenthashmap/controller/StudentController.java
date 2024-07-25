@@ -34,11 +34,6 @@ public class StudentController {
         return service.saveStudent(student);
     }
 
-    @PostMapping("/v2")
-    public StudentDTO addStudentDTO(@RequestBody @Valid StudentDTO studentDTO) {
-        return service.saveStudentDTO(studentDTO);
-    }
-
     @GetMapping("/v1/all")
     public Map<Integer, Student> findAllStudents() {
         return service.getStudents();
@@ -69,7 +64,7 @@ public class StudentController {
         return service.updateStudentField(rollNo, fields);
     }
 
-    @DeleteMapping("/v1/{rollNo}")
+    @DeleteMapping("/{rollNo}")
     public String deleteStudent(@PathVariable int rollNo) {
         return service.deleteStudent(rollNo);
     }

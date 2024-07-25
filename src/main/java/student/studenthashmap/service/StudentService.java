@@ -8,11 +8,22 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+import jakarta.annotation.PostConstruct;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import student.studenthashmap.mapper.StudentMapper;
 import student.studenthashmap.model.Student;
 import student.studenthashmap.model.StudentDTO;
@@ -26,6 +37,18 @@ public class StudentService {
 
     @Autowired
     private StudentMapper mapper;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private final Validator validator;
+
+    @PostConstruct
+    public void setUp() {
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(LocalDate.class, new Config());
+        objectMapper.registerModule(module);
+    }
 
     public Student saveStudent(Student student) {
         return repository.save(student);
@@ -51,8 +74,6 @@ public class StudentService {
     }
 
     public Optional<Student> getStudentByRollNo(int rollNo) {
-
-        //if (rollNo <= 0) throw new RollNoNotFoundException(rollNo);
         return repository.findByRollNo(rollNo);
     }
 
@@ -63,7 +84,7 @@ public class StudentService {
 
     public String deleteStudent(int rollNo) {
         boolean isDeleted = repository.delete(rollNo);
-        return isDeleted ? "Student removed. " + rollNo : "Student not found with roll no. " + rollNo;
+        return isDeleted ? "Removed student with Roll Number - " + rollNo : "No studentfound with Roll Number -  " + rollNo;
     }
 
     public Optional<Student> updateStudent(Student student) {
@@ -79,7 +100,7 @@ public class StudentService {
         DateTimeFormatter.ISO_LOCAL_DATE
     );
 
-    public Student updateStudentField(int rollNo, Map<String, Object> fields) {
+    public Student updateStudentField(@Valid int rollNo, Map<String, Object> fields) {
         Optional<Student> studentOpt = repository.findByRollNo(rollNo);
 
         if (studentOpt.isPresent()) {
@@ -96,7 +117,12 @@ public class StudentService {
                 } else {
                     field.set(student, fieldValue);
                 }
-            } catch (NoSuchFieldException | IllegalAccessException e) {
+
+                validateField(student, fieldName, fieldValue);
+
+            } catch (NoSuchFieldException e) {
+                throw new IllegalArgumentException("Unknown field: " + fieldName);
+            } catch (IllegalAccessException e) {
                 throw new RuntimeException("Failed to update field: " + fieldName, e);
             }
         });
@@ -113,9 +139,20 @@ public class StudentService {
             try {
                 return LocalDate.parse(dateStr, formatter);
             } catch (DateTimeParseException e) {
-                throw new DateTimeParseException("Unable to parse date: " + dateStr + ". Please write in YYYY-MM-DD format.", dateStr, 0);
+                throw new DateTimeParseException("Unable to parse date: " + dateStr + ". Please use the YYYY-MM-DD format.", dateStr, 0);
             }
         }
-        throw new DateTimeParseException("Unable to parse date: " + dateStr + "Please write in YYYY-MM-DD format.", dateStr, 0);
+        throw new DateTimeParseException("Unable to parse date: " + dateStr + "Please use the YYYY-MM-DD format.", dateStr, 0);
+    }
+
+    public StudentService() {
+        this.validator = Validation.buildDefaultValidatorFactory().getValidator();
+    }
+
+    private void validateField(Student student, String fieldName, Object fieldValue) {
+        Set<ConstraintViolation<Student>> violations = validator.validateProperty(student, fieldName);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
     }
 }

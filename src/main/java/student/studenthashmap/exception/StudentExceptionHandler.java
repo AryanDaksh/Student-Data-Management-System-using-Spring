@@ -8,11 +8,14 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice(annotations = RestController.class)
 public class StudentExceptionHandler{
@@ -29,43 +32,53 @@ public class StudentExceptionHandler{
 		  return new ResponseEntity<> (errors, HttpStatus.BAD_REQUEST);
 	}
 
-	@ExceptionHandler(value = {ApiRequestException.class})
-	public ResponseEntity<Object> handleApiRequestException(ApiRequestException e) {
-	
-		HttpStatus badRequest = HttpStatus.BAD_REQUEST;
-
-		ApiException apiException = new ApiException(e.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
-		);
-		return new ResponseEntity<>(apiException, badRequest);
-		}
-
-	@ExceptionHandler(value = {RollNoNotFoundException.class})
-	public ResponseEntity<Object> rollNoNotFoundException(RollNoNotFoundException e) {
-	
-		HttpStatus notFound = HttpStatus.NOT_FOUND;
-
-		ApiException apiException = new ApiException(e.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
-		);
-		return new ResponseEntity<>(apiException, notFound);
-		}
-
 	@ExceptionHandler(IllegalArgumentException.class)
-	public ResponseEntity<Object> handleIllegalArgException(IllegalArgumentException ey) {
+	public ResponseEntity<Object> handleIllegalArgException(IllegalArgumentException e) {
 	
 		HttpStatus notFound = HttpStatus.NOT_FOUND;
 	
-		ApiException apiException = new ApiException(ey.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
+		ApiException apiException = new ApiException(e.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
 		);
 		return new ResponseEntity<>(apiException, notFound);
 	}
 
 	@ExceptionHandler(DateTimeParseException.class)
-	public ResponseEntity<Object> handleIllegalArgException(DateTimeParseException ex) {
+    public ResponseEntity<Object> handleDateTimeParseException(DateTimeParseException e) {
+
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+
+        ApiException apiException = new ApiException(e.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))
+		);
+        return new ResponseEntity<>(apiException, badRequest);
+    }
+
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<Object> handleHttpMsgException(HttpMessageNotReadableException e) {
+	
+		HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+	
+		ApiException apiException = new ApiException(e.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
+		);
+		return new ResponseEntity<>(apiException, badRequest);
+	}
+
+	@ExceptionHandler(NoSuchFieldException.class)
+	public ResponseEntity<Object> handleNoFieldException(NoSuchFieldException e) {
 	
 		HttpStatus notFound = HttpStatus.NOT_FOUND;
 	
-		ApiException apiException = new ApiException(ex.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
+		ApiException apiException = new ApiException(e.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
 		);
 		return new ResponseEntity<>(apiException, notFound);
+	}
+
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<Object> handleConstraintException(ConstraintViolationException e) {
+	
+		HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+	
+		ApiException apiException = new ApiException(e.getMessage(), ZonedDateTime.now(ZoneId.of("Asia/Kolkata"))   
+		);
+		return new ResponseEntity<>(apiException, badRequest);
 	}
 }
