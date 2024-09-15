@@ -2,9 +2,7 @@ package student.studenthashmap.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import student.studenthashmap.model.Student;
-import student.studenthashmap.model.StudentDTO;
+import student.studenthashmap.model.*;
 
 @Mapper(componentModel = "spring")
 public interface StudentMapper {

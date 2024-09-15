@@ -15,7 +15,7 @@ public class StudentControllerTest {
     private StudentController controller;
 
     @Test
-    void contextLoads() throws Exception {
+    public void contextLoads() throws Exception {
 		        assertThat(controller).isNotNull(); 
     }
 }
