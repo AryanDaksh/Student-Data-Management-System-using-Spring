@@ -2,31 +2,17 @@ package student.studenthashmap.service;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.time.format.*;
+import java.util.*;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-
 import jakarta.annotation.PostConstruct;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.Valid;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
+import jakarta.validation.*;
 import student.studenthashmap.mapper.StudentMapper;
-import student.studenthashmap.model.Student;
-import student.studenthashmap.model.StudentDTO;
+import student.studenthashmap.model.*;
 import student.studenthashmap.repo.StudentRepository;
 
 @Service
